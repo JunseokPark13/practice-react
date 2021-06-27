@@ -20,14 +20,16 @@ export default class Controller {
 
   search(searchKeyword){
     console.log(tag, searchKeyword);
-    this.keyword = searchKeyword;
     this.store.search(searchKeyword)
     this.render()
   }
 
   reset(keyword){
     console.log(tag, keyword);
-    this.keyword = keyword;
+    this.store.searchKeyword = ""
+    this.store.searchResult = []
+    this.render();
+    this.searchResultView.hide();
   }
 
   render() {

@@ -33,7 +33,6 @@ class Template {
   }
 
   _getItem({ imageUrl, name }) {
-      console.log(imageUrl);
     return `
         <li>
             <img src="${imageUrl}" alt="${name}" />
