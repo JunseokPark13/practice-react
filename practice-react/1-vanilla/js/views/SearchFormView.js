@@ -46,4 +46,10 @@ export default class SearchFormView extends View {
     console.log(tag, "handlereset");
     this.emit("@reset", {value: null});
   }
+
+  show(searchKeyword = "") {
+    this.inputElement.value = searchKeyword
+    this.showResetButton(this.inputElement.value.length > 0)
+    super.show()
+  }
 }
