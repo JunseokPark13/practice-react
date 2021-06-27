@@ -1,11 +1,23 @@
-import { qs } from "../helpers.js";
+import { delegate, qs } from "../helpers.js";
 import View from "./View.js";
+
+const tag = '[KeywordListview]'
 
 export default class KeywordListView extends View {
   constructor() {
     super(qs("#keyword-list-view"));
 
     this.template = new Template();
+    this.bindEvents();
+  }
+
+  bindEvents(){
+      delegate(this.element, "click", "li", event => this.handleClick(event))
+  }
+
+  handleClick(event){
+      const value = event.target.dataset.keyword;
+      this.emit("@click", { value })
   }
 
   show(data = []) {
