@@ -1,8 +1,6 @@
 import { qs, qsAll, delegate } from "../helpers.js";
 import View from "./View.js";
 
-const tag = '[TabView]'
-
 export const TabType = {
   KEYWORD: "KEYWORD",
   HISTORY: "HISTORY",

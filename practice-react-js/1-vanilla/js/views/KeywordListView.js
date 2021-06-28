@@ -1,8 +1,6 @@
 import { delegate, qs } from "../helpers.js";
 import View from "./View.js";
 
-const tag = '[KeywordListview]'
-
 export default class KeywordListView extends View {
   constructor(element = qs("#keyword-list-view"), template = new Template()) {
     super(element);

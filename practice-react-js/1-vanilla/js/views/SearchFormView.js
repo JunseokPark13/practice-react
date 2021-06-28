@@ -1,12 +1,9 @@
 import { qs, on } from "../helpers.js";
 import View from "./View.js";
 
-const tag = "[SearchFormView]";
 
 export default class SearchFormView extends View {
   constructor() {
-    console.log(tag, "constructor");
-
     super(qs("#search-form-view"));
 
     this.resetElement = qs("[type=reset]", this.element);
@@ -37,13 +34,11 @@ export default class SearchFormView extends View {
 
   handleSubmit(event){
     event.preventDefault();
-    console.log(tag, "handlesubmit");
     const { value } = this.inputElement;
     this.emit("@submit", {value});
   }
 
   handleReset(){
-    console.log(tag, "handlereset");
     this.emit("@reset", {value: null});
   }
 
