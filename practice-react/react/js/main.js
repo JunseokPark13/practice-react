@@ -1,9 +1,13 @@
+import store from "./js/Store.js";
+
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
       searchKeyword: "",
+      searchResult: [],
+      submitted: false,
     };
   }
 
@@ -15,38 +19,69 @@ class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('Todo : handleSubmit', this.state.searchKeyword)
+    console.log("Todo : handleSubmit", this.state.searchKeyword);
+    if (this.state.searchKeyword.length > 0)this.search(this.state.searchKeyword);
   }
 
-  handleReset(){
-    this.setState(() => { 
-      return { searchKeyword: "" }
-    }, () =>{
-      console.log('Todo : handleReset', this.state.searchKeyword)
-    })
+  search(searchKeyword) {
+    const searchResult = store.search(searchKeyword);
+    this.setState({ searchResult, submitted: true });
+  }
+
+  handleReset() {
+    this.setState(
+      () => {
+        return { searchKeyword: "", searchResult: [], submitted: false };
+      },
+      () => {
+        console.log("Todo : handleReset", this.state.searchKeyword);
+      }
+    );
   }
 
   render() {
+    const searchForm = (
+      <form
+        onSubmit={(event) => this.handleSubmit(event)}
+        onReset={() => this.handleReset()}
+      >
+        <input
+          type="text"
+          placeholder="검색어를 입력하세요"
+          autoFocus
+          value={this.state.searchKeyword}
+          onChange={(event) => this.handleChangeInput(event)}
+        />
+        {this.state.searchKeyword.length > 0 ? (
+          <button type="reset" className="btn-reset"></button>
+        ) : null}
+      </form>
+    );
+
+    const searchResult =
+      this.state.searchResult.length > 0 ? (
+        <ul className="result">
+          {this.state.searchResult.map((item) => {
+            return (
+              <li key={item.id}>
+                <img src={item.imageUrl} alt={item.name} />
+                <p>{item.name}</p>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div className="empty-box"> 검색 결과가 없습니다. </div>
+      );
+
     return (
       <>
         <header>
           <h2 className="container">검색</h2>
         </header>
         <div className="container">
-          <form onSubmit={(event) => this.handleSubmit(event)}
-          onReset={() => this.handleReset()}
-          >
-            <input
-              type="text"
-              placeholder="검색어를 입력하세요"
-              autoFocus
-              value={this.state.searchKeyword}
-              onChange={(event) => this.handleChangeInput(event)}
-            />
-            {this.state.searchKeyword.length > 0 ? (
-              <button type="reset" className="btn-reset"></button>
-            ) : null}
-          </form>
+          {searchForm}
+          <div className="content">{this.state.submitted && searchResult}</div>
         </div>
       </>
     );
@@ -54,3 +89,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.querySelector("#app"));
+
+{
+}
