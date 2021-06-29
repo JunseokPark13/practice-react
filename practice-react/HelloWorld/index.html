@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lecture React</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      // const element1 = React.createElement("p", null, "Hello world");
+      const element1 = <h1>Hello World</h1>
+
+      console.log(element1);
+      ReactDOM.render(element1, document.querySelector("#app"));
+
+      //document.body.innerHTML = '<p>Hello World</p>'
+      // const p = document.createElement('p')
+      // p.textContent = "Hello World"
+      // console.log(p);
+      // document.body.appendChild(p);
+    </script>
+  </body>
+</html>
