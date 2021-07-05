@@ -38,6 +38,14 @@ class App extends React.Component {
     else this.handleReset();
   }
 
+  handleClickRemoveHistory(event, keyword){
+    event.stopPropagation()
+    store.removeHistory(keyword)
+    const historyList = store.getHistoryList()
+    this.setState({ historyList })
+
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     console.log("Todo : handleSubmit", this.state.searchKeyword);
@@ -91,7 +99,7 @@ class App extends React.Component {
 
     const keywordList = (
       <ul className="list">
-        {this.state.keywordList.map(({id, keyword}, index) => {
+        {this.state.keywordList.map(({ id, keyword }, index) => {
           return (
             <li onClick={() => this.search(keyword)} key={id}>
               <span className="number">{index + 1}</span>
@@ -104,12 +112,15 @@ class App extends React.Component {
 
     const historyList = (
       <ul className="list">
-        {this.state.historyList.map(({id, keyword, date}, index) => {
+        {this.state.historyList.map(({ id, keyword, date }) => {
           return (
-            <li onChange={() => this.search(keyword)} key={id}>
+            <li onClick={() => this.search(keyword)} key={id}>
               <span>{keyword}</span>
               <span className="date">{formatRelativeDate(date)}</span>
-              <button className="btn-remove"></button>
+              <button
+                className="btn-remove"
+                onClick={(event) => this.handleClickRemoveHistory(event, keyword)}
+              ></button>
             </li>
           );
         })}
