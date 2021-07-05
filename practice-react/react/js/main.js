@@ -18,6 +18,7 @@ class App extends React.Component {
       searchKeyword: "",
       searchResult: [],
       submitted: false,
+      selectedTab: TabType.KEYWORD,
     };
   }
 
@@ -79,11 +80,24 @@ class App extends React.Component {
       );
 
     const tabs = (
-      <ul className="tabs">
-        {Object.values(TabType).map((tabType) => {
-          return <li key={tabType}>{TabLabel[tabType]}</li>;
-        })}
-      </ul>
+      <>
+        <ul className="tabs">
+          {Object.values(TabType).map((tabType) => {
+            let cls = this.state.selectedTab === tabType ? "active" : "";
+            return (
+              <li
+                onClick={() => this.setState({ selectedTab: tabType })}
+                className={cls}
+                key={tabType}
+              >
+                {TabLabel[tabType]}
+              </li>
+            );
+          })}
+        </ul>
+        {this.state.selectedTab === TabType.KEYWORD && <>TODO: 추천 검색어</>}
+        {this.state.selectedTab === TabType.HISTORY && <>TODO: 최근 검색어</>}
+      </>
     );
 
     return (
@@ -93,7 +107,9 @@ class App extends React.Component {
         </header>
         <div className="container">
           {searchForm}
-          <div className="content">{this.state.submitted ? searchResult : tabs}</div>
+          <div className="content">
+            {this.state.submitted ? searchResult : tabs}
+          </div>
         </div>
       </>
     );
