@@ -1,3 +1,4 @@
+import { createNextId } from "./helpers.js";
 import storage from "./storage.js";
 
 const tag = "[Store]";
@@ -13,6 +14,7 @@ class Store {
   }
 
   search(keyword) {
+    this.addHistory(keyword)
     return this.storage.productData.filter((product) =>
       product.name.includes(keyword)
     );
@@ -48,7 +50,10 @@ class Store {
     if (hasHistory) this.removeHistory(keyword);
 
     const date = new Date();
-    this.storage.historyData.push({ keyword, date });
+    const id = createNextId(this.storage.historyData)
+
+    console.log(id)
+    this.storage.historyData.push({ id, keyword, date });
     this.storage.historyData = this.storage.historyData.sort(this._sortHistory);
   }
 }

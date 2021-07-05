@@ -61,5 +61,6 @@ export function createPastDate(date = 1, now = new Date()) {
 }
 
 export function createNextId(list = []) {
-  return Math.max(...list.map((item) => item.id)) + 1;
+  let nextId = Math.max(...list.map((item) => item.id)) + 1
+  return nextId < 0 ? 0 : nextId
 }
