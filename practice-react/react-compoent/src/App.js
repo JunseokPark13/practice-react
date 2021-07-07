@@ -3,6 +3,7 @@ import Header from "./components/header";
 import SearchForm from "./components/SearchForm";
 import SearchResult from "./components/SearchResult";
 import store from "./Store";
+import Tabs, { TabType } from "./components/tabs";
 
 export default class App extends React.Component {
   constructor() {
@@ -12,29 +13,29 @@ export default class App extends React.Component {
       searchKeyword: "",
       searchResult: [],
       submitted: false,
+      selectedTab: TabType.KEYWORD,
     };
   }
 
   handleChangeInput(searchKeyword) {
-      if (searchKeyword.length <= 0){
-          this.handleReset()
-      }
-      this.setState({ searchKeyword })
+    if (searchKeyword.length <= 0) {
+      this.handleReset();
+    }
+    this.setState({ searchKeyword });
   }
 
   search(searchKeyword) {
     console.log("Todo Search : ", searchKeyword);
-    const searchResult = store.search(searchKeyword)
-    this.setState({searchResult, submitted: true,})
-    
+    const searchResult = store.search(searchKeyword);
+    this.setState({ searchResult, submitted: true });
   }
 
   handleReset() {
-    this.setState({searchKeyword:"", searchResult: [], submitted: false,})
+    this.setState({ searchKeyword: "", searchResult: [], submitted: false });
   }
 
   render() {
-    const { searchKeyword, submitted, searchResult } = this.state
+    const { searchKeyword, submitted, searchResult, selectedTab } = this.state;
 
     return (
       <>
@@ -47,10 +48,20 @@ export default class App extends React.Component {
             onReset={() => this.handleReset()}
           />
           <div className="content">
-            {submitted && <SearchResult data={searchResult} />}
+            {submitted ? (
+              <SearchResult data={searchResult} />
+            ) : (
+              <>
+                <Tabs
+                  selectedTab={selectedTab}
+                  onChange={(selectedTab) =>  this.setState({ selectedTab })}
+                />
+                {selectedTab === TabType.KEYWORD && <>ToDO: 추천 검색어 </>}
+                {selectedTab === TabType.HISTORY && <>ToDO: 최근 검색어 </>}
+              </>
+            )}
           </div>
         </div>
-        
       </>
     );
   }
