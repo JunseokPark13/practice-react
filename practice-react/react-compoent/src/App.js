@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "./components/header";
 import SearchForm from "./components/SearchForm";
+import SearchResult from "./components/SearchResult";
+import store from "./Store";
 
 export default class App extends React.Component {
   constructor() {
@@ -8,6 +10,8 @@ export default class App extends React.Component {
 
     this.state = {
       searchKeyword: "",
+      searchResult: [],
+      submitted: false,
     };
   }
 
@@ -20,24 +24,33 @@ export default class App extends React.Component {
 
   search(searchKeyword) {
     console.log("Todo Search : ", searchKeyword);
+    const searchResult = store.search(searchKeyword)
+    this.setState({searchResult, submitted: true,})
+    
   }
 
   handleReset() {
-    console.log("reset");
+    this.setState({searchKeyword:"", searchResult: [], submitted: false,})
   }
 
   render() {
+    const { searchKeyword, submitted, searchResult } = this.state
+
     return (
       <>
         <Header title="검색" />
         <div className="container">
           <SearchForm
-            value={this.state.searchKeyword}
+            value={searchKeyword}
             onChange={(value) => this.handleChangeInput(value)}
             onSubmit={(searchKeyword) => this.search(searchKeyword)}
             onReset={() => this.handleReset()}
           />
+          <div className="content">
+            {submitted && <SearchResult data={searchResult} />}
+          </div>
         </div>
+        
       </>
     );
   }
