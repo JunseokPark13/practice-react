@@ -4,6 +4,8 @@ import SearchForm from "./components/SearchForm";
 import SearchResult from "./components/SearchResult";
 import store from "./Store";
 import Tabs, { TabType } from "./components/tabs";
+import KeywordList from "./components/KeywordList";
+import HistoryList from "./components/HistoryList";
 
 export default class App extends React.Component {
   constructor() {
@@ -27,7 +29,7 @@ export default class App extends React.Component {
   search(searchKeyword) {
     console.log("Todo Search : ", searchKeyword);
     const searchResult = store.search(searchKeyword);
-    this.setState({ searchResult, submitted: true });
+    this.setState({ searchKeyword, searchResult, submitted: true });
   }
 
   handleReset() {
@@ -56,8 +58,8 @@ export default class App extends React.Component {
                   selectedTab={selectedTab}
                   onChange={(selectedTab) =>  this.setState({ selectedTab })}
                 />
-                {selectedTab === TabType.KEYWORD && <>ToDO: 추천 검색어 </>}
-                {selectedTab === TabType.HISTORY && <>ToDO: 최근 검색어 </>}
+                {selectedTab === TabType.KEYWORD && <KeywordList onClick={keyword => this.search(keyword)}/>}
+                {selectedTab === TabType.HISTORY && <HistoryList onClick={keyword => this.search(keyword)}/>}
               </>
             )}
           </div>
