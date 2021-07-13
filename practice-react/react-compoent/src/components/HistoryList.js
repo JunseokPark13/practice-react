@@ -12,18 +12,18 @@ export default class HistoryList extends React.Component {
     };
   }
 
-  fetch(){
-    const keywordList = store.getHistoryList();
+  fetch() {
+    const historyList = store.getHistoryList();
     this.setState({
-      keywordList,
+      historyList,
     });
   }
 
   componentDidMount() {
-    this.fetch()
+    this.fetch();
   }
 
-    handleClickRemoveHistory(event, keyword) {
+  handleClickRemoveHistory(event, keyword) {
     event.stopPropagation();
 
     store.removeHistory(keyword);
@@ -38,15 +38,15 @@ export default class HistoryList extends React.Component {
         renderItem={(item) => {
           return (
             <>
-            <span>{item.keyword}</span>
-            <span className="date">{formatRelativeDate(item.date)}</span>
-            <button
-              className="btn-remove"
-              onClick={(event) =>
-                this.handleClickRemoveHistory(event, item.keyword)
-              }
-            />
-          </>
+              <span>{item.keyword}</span>
+              <span className="date">{formatRelativeDate(item.date)}</span>
+              <button
+                className="btn-remove"
+                onClick={(event) =>
+                  this.handleClickRemoveHistory(event, item.keyword)
+                }
+              />
+            </>
           );
         }}
       />
@@ -75,16 +75,16 @@ export default class HistoryList extends React.Component {
 
 //   renderItem(item) {
 //     return (
-      // <>
-      //   <span>{item.keyword}</span>
-      //   <span className="date">{formatRelativeDate(item.date)}</span>
-      //   <button
-      //     className="btn-remove"
-      //     onClick={(event) =>
-      //       this.handleClickRemoveHistory(event, item.keyword)
-      //     }
-      //   />
-      // </>
+// <>
+//   <span>{item.keyword}</span>
+//   <span className="date">{formatRelativeDate(item.date)}</span>
+//   <button
+//     className="btn-remove"
+//     onClick={(event) =>
+//       this.handleClickRemoveHistory(event, item.keyword)
+//     }
+//   />
+// </>
 //     );
 //   }
 // }
