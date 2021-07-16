@@ -1,7 +1,6 @@
 import React from "react";
 import List from "./List.js";
 import store from "../Store.js";
-import { formatRelativeDate } from "../helpers.js";
 
 export default class HistoryList extends React.Component {
   constructor() {
@@ -23,9 +22,7 @@ export default class HistoryList extends React.Component {
     this.fetch();
   }
 
-  handleClickRemoveHistory(event, keyword) {
-    event.stopPropagation();
-
+  handleClickRemoveHistory(keyword) {
     store.removeHistory(keyword);
     this.fetch();
   }
@@ -33,22 +30,10 @@ export default class HistoryList extends React.Component {
   render() {
     return (
       <List
-        data={this.state.keywordList}
+        data={this.state.historyList}
         onClick={this.props.onClick}
-        renderItem={(item) => {
-          return (
-            <>
-              <span>{item.keyword}</span>
-              <span className="date">{formatRelativeDate(item.date)}</span>
-              <button
-                className="btn-remove"
-                onClick={(event) =>
-                  this.handleClickRemoveHistory(event, item.keyword)
-                }
-              />
-            </>
-          );
-        }}
+        hasDate={true}
+        onRemove={(keyword) => this.handleClickRemoveHistory(keyword)}
       />
     );
   }

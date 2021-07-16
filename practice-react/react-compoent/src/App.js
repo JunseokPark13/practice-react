@@ -38,7 +38,6 @@ export default class App extends React.Component {
 
   render() {
     const { searchKeyword, submitted, searchResult, selectedTab } = this.state;
-
     return (
       <>
         <Header title="검색" />
